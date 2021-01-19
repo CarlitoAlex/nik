@@ -43,39 +43,8 @@ public class MainController {
     @Autowired
     private VideoService videoService;
 
-//    @Scheduled(cron = "0 */2 * ? * *")
-//    public void test(){
-//        for (int i = 0 ; i< listId().size(); i++){
-//            Response response = given()
-//                    .param("id",listId().get(i))
-//                    .param("key","AIzaSyChNOh98xr6P-qx129PN2mBDzFeCYqzaK8")
-//                    .param("part","statistics")
-//                    .get("https://www.googleapis.com/youtube/v3/videos");
-//            String count = response.jsonPath().getString("items[0].statistics.viewCount");
-//            String likes = response.jsonPath().getString("items[0].statistics.likeCount");
-//            String dislikes = response.jsonPath().getString("items[0].statistics.dislikeCount");
-//            String comments = response.jsonPath().getString("items[0].statistics.commentCount");
-//            videoService.saveVideoInfo(listId().get(i),count,likes,dislikes,comments);
-//        }
-//    }
-
-    public List<String> listId() {
-        List<String> list = new ArrayList<>();
-        list.add(id);
-        list.add(id2);
-        list.add(id3);
-        list.add(id4);
-        list.add(id5);
-        list.add(id6);
-        list.add(id7);
-        list.add(id8);
-        list.add(id9);
-        list.add(id10);
-        return list;
-    }
-
-    @GetMapping(value = "/create")
-    public void getList() {
+    @Scheduled(cron = "0 */30 * ? * *")
+    public void parseStatistic(){
         for (int i = 0; i < listId().size(); i++) {
             if (!listId().isEmpty() && !listId().get(i).equals("")) {
                 Response response = given()
@@ -90,6 +59,21 @@ public class MainController {
                 videoService.saveVideoInfo(listId().get(i), count, likes, dislikes, comments);
             }
         }
+    }
+
+    public List<String> listId() {
+        List<String> list = new ArrayList<>();
+        list.add(id);
+        list.add(id2);
+        list.add(id3);
+        list.add(id4);
+        list.add(id5);
+        list.add(id6);
+        list.add(id7);
+        list.add(id8);
+        list.add(id9);
+        list.add(id10);
+        return list;
     }
 }
 
